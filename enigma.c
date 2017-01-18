@@ -20,11 +20,11 @@ typedef struct _setting {
 
 static char* createWheel(int num);
 
-setting newEnigma() {
+Setting newEnigma() {
     //create a new enigma machine to use including settings
     Setting e = malloc(sizeof(struct _setting));
     
-    int choice, ;
+    int choice;
 
     for(int i = 0; i < 6; i++) {
         if(i < 3) {

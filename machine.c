@@ -9,11 +9,15 @@
 #include "enigma.h"
 
 int main(int argc, char *argv[]) {
+    // copies the message into an array to decrypt or encrypt later;
+    char message[] = argv;
+    int length;
 
-    while(true) {
-        
-
+    Setting e = newEnigma();
+    for(int i = 0; i < length; i++) {
+        printf("%c", scramble(message[i]), e);
     }
+    printf("\n is the message");
 
     return EXIT_SUCCESS;
 }
