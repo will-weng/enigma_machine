@@ -6,21 +6,28 @@
 
 #include "enigma.h"
 
-#define WHEEL_SIZE 4*26;
+#define ALPHABET_NUM 26;
 
 typedef struct _setting {
     char plugBoard[26];
-    int *wheel1;
-    int *wheel2;
-    int *wheel3;
+    int **rotors[3];
 } setting;
 
 
-static int* createWheels(int num);
 
-void newEnigma() {
-    //create wheels
+static int* createWheel(int num);
 
+setting newEnigma() {
+    //create a new enigma machine to use including settings
+    Setting e = malloc(sizeof(struct _setting));
+    int holder;
+
+    for(int i = 0; i < 3; i++) {
+        scanf("%d", &holder);
+        e->rotors[i] = createWheel(holder);
+    }
+
+    return e;
 }
 
 char scramble(char c) {
@@ -28,7 +35,8 @@ char scramble(char c) {
     return encrypt;
 }
 
-static int* createWheels(int num) {
-    int wheel[] = malloc(WHEEL_SIZE);
+static int* createWheel(int num) {
+    int wheel[] = malloc(ALPHABET_NUM*sizeof(char));
+
     return wheel;
 }
