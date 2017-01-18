@@ -11,6 +11,7 @@
 typedef struct _setting {
     char plugBoard[26];
     int **rotors[3];
+    int rotorPos[3];
 } setting;
 
 static int* createWheel(int num);
@@ -18,7 +19,10 @@ static int* createWheel(int num);
 setting newEnigma() {
     //create a new enigma machine to use including settings
     Setting e = malloc(sizeof(struct _setting));
+    
+
     int holder;
+
 
     for(int i = 0; i < 3; i++) {
         scanf("%d", &holder);
@@ -28,13 +32,14 @@ setting newEnigma() {
     return e;
 }
 
-char scramble(char c) {
+char scramble(char c, Setting e) {
     char encrypt;
     return encrypt;
 }
 
 static int* createWheel(int num) {
     int wheel[] = malloc(ALPHABET_NUM*sizeof(char));
+
 
     return wheel;
 }
