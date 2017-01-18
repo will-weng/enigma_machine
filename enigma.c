@@ -1,11 +1,11 @@
 //
-// William Weng
+// William Weng, Andrew Carmichael
 // Enigma Machine blackbox
 // 16/01/2017
 //
 
 #include "enigma.h"
-#include "string.h"
+#include <string.h>
 
 #define ALPHABET_NUM 26;
 #define SWITCH_NUM 10;

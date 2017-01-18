@@ -1,5 +1,5 @@
 //
-// William Weng
+// William Weng, Andrew Carmichael
 // Enigma Machine interface
 // 16/01/2017
 //
