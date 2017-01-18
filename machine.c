@@ -20,5 +20,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n is the message");
 
+    deleteEnigma(e);
+    
     return EXIT_SUCCESS;
 }

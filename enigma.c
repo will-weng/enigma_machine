@@ -7,6 +7,7 @@
 #include "enigma.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define ALPHABET_NUM 26
 #define SWITCH_NUM 10
@@ -33,37 +34,48 @@ Setting newEnigma() {
             printf("Choose index for rotor %d:\n", i - 2);
 
         }
-        if(scanf("%d", &choice) == 1){
+        if(scanf(" %d ", &choice) > 0){
             if(i < 3) {
                 e->rotorId[i] = choice;
                 *e->rotors[i] = createWheel(choice);
-                printf("TESTING\n");
             } else {
                 e->rotorPos[i - 3] = choice;
             }
+        } else {
+            printf("Invalid choice, please retry\n");
+            i--;
         }
     }
     printf("Choose the reflector:\n");
-    if(scanf("%d", &choice) == 1) {
+    if(scanf("%d ", &choice) > 0) {
        *e->rotors[4] = createWheel(choice);
     }
 
     strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxy"); e->plugBoard[ALPHABET_NUM - 1] = 'z';
     char switch1, switch2;
     for(i = 0; i < SWITCH_NUM; i++) {
-        printf("Enter the pair of switches(%d):\n", i);
-        if(scanf("%c %c", &switch1, &switch2) == 1) {
+        printf("Enter a pair of switches(%d):\n", i + 1);
+        if(scanf("%c %c ", &switch1, &switch2) > 0) {
             e->plugBoard[switch1 - 'a'] = switch2;
             e->plugBoard[switch2 - 'a'] = switch1;
+        } else {
+            printf("Didn't read properly please re-enter\n");
+            i--;
         }
     }
-
     return e;
 }
 
 char scramble(char c, Setting e) {
     char encrypt = c;
     return encrypt;
+}
+
+
+void deleteEnigma(Setting e) {
+    int i;
+    for(i = 0; i < 4; i++) free(e->rotors[i]);
+    free(e);
 }
 
 static char* createWheel(int num) {

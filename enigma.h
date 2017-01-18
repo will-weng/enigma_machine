@@ -13,4 +13,7 @@ Setting newEnigma();
 char scramble(char c, Setting e);
 
 // updates the current setting including rotor and pairs
-void updateSetting(Setting e);
+// void updateSetting(Setting e);
+
+// free's up all mallocs
+void deleteEnigma(Setting e);
