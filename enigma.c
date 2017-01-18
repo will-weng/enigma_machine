@@ -13,8 +13,6 @@ typedef struct _setting {
     int **rotors[3];
 } setting;
 
-
-
 static int* createWheel(int num);
 
 setting newEnigma() {

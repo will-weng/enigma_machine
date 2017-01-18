@@ -6,8 +6,11 @@
 
 typedef struct _setting *Setting;
 
-void newEnigma();
+// creates an enigma machine with settings
+Setting newEnigma();
 
-char scramble(char c);
+// given the current settings
+char scramble(char c, Setting e);
 
-void updateSetting();
+// updates the current setting including rotor and pairs
+void updateSetting(Setting e);
