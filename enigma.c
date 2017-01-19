@@ -52,7 +52,7 @@ Setting newEnigma() {
         }
     }
     printf("Choose the reflector:\n");
-    if(scanf("%d ", &choice) > 0) {
+    if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)) {
        addWheel(choice, e->rotors[4]);
     }
 
@@ -60,7 +60,7 @@ Setting newEnigma() {
     char switch1, switch2;
     for(i = 0; i < SWITCH_NUM; i++) {
         printf("Enter a pair of switches(%d):\n", i + 1);
-        if(fgets(line, sizeof(line), stdin) != NULL && scanf("%c %c ", &switch1, &switch2) > 0) {
+        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c %c", &switch1, &switch2)) {
             e->plugBoard[switch1 - 'a'] = switch2;
             e->plugBoard[switch2 - 'a'] = switch1;
         } else {
@@ -75,7 +75,6 @@ Setting newEnigma() {
 char scramble(char c, Setting e){
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
-
 
     //Read in the rotor settings
     int rotOne = e->rotorPos[0];
@@ -154,6 +153,7 @@ char scramble(char c, Setting e){
         e->rotorPos[2] = 1;
     }
 
+    printf("\n======TESTING======\n");
     //Return value
     return retVal;
 }
