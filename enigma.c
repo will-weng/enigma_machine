@@ -14,12 +14,12 @@
 
 typedef struct _setting {
     char plugBoard[ALPHABET_NUM];
-    char **rotors[4];
+    char rotors[4][ALPHABET_NUM];
     int rotorId[3];
     int rotorPos[3];
 } setting;
 
-static char* createWheel(int num);
+static void addWheel(int num, char *wheel);
 static int index(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
@@ -41,7 +41,7 @@ Setting newEnigma() {
         if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)){
             if(i < 3) {
                 e->rotorId[i] = choice;
-                *e->rotors[i] = createWheel(choice);
+                addWheel(choice, e->rotors[i]);
             } else {
                 e->rotorPos[i - 3] = choice;
             }
@@ -52,7 +52,7 @@ Setting newEnigma() {
     }
     printf("Choose the reflector:\n");
     if(scanf("%d ", &choice) > 0) {
-       *e->rotors[4] = createWheel(choice);
+       addWheel(choice, e->rotors[4]);
     }
 
     strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxy"); e->plugBoard[ALPHABET_NUM - 1] = 'z';
@@ -97,26 +97,26 @@ char scramble(char c, Setting e){
 
     //Reverse 3
     int indexThree = findIndexInRotor(e->rotors[2],reflect);
-    char rThree = alphabet[((index-e->rotorPos[2])%26+26)%26];
+    char rThree = alphabet[((indexThree-e->rotorPos[2])%26+26)%26];
 
     //Reverse 2
     int indexTwo = findIndexInRotor(e->rotors[1],rThree);
-    char rTwo = alphabet[((index-e->rotorPos[1])%26+26)%26];
+    char rTwo = alphabet[((indexTwo-e->rotorPos[1])%26+26)%26];
 
     //Reverse 1
-    int indexOne = findIndexInRotor(ee->rotors[0],rTwo);
-    char rOne = alphabet[((index-e->rotorPos[0])%26+26)%26];
+    int indexOne = findIndexInRotor(e->rotors[0],rTwo);
+    char rOne = alphabet[((indexOne-e->rotorPos[0])%26+26)%26];
 
     //Reverse Plugboard
     int retVal = e->plugBoard[index(rOne)];
 
     //Checking for notch incrementation on rotor 1
-    if (e->rotorPos[0] == getNotchIndex(e->rotorId[0])[0] || rotorPos[0] == getNotchIndex(e->rotorId[0])[1]){
+    if (e->rotorPos[0] == getNotchIndex(e->rotorId[0])[0] || e->rotorPos[0] == getNotchIndex(e->rotorId[0])[1]){
         e->rotorPos[1]++;
     }
 
     //Checking for notch incrementation on rotor 2
-    if (e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[0]) || rotorPos[1] == index(getNotchIndex(e->rotorId[1])[1])){
+    if (e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[0]) || e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[1])){
         e->rotorPos[2]++;
     }
 
@@ -159,8 +159,7 @@ void deleteEnigma(Setting e) {
     free(e);
 }
 
-static char* createWheel(int num) {
-    char *wheel = malloc(ALPHABET_NUM * sizeof(char));
+static void addWheel(int num, char *wheel) {
     switch(num) {
         case '1' :
             wheel = "ejmzalyxvbwfcrquontspikhgd";
@@ -184,7 +183,6 @@ static char* createWheel(int num) {
             wheel = "fkqhtlxocbjspdzramewniuygv";
             break;
     }
-    return wheel;
 }
 
 static int index(char letter){
