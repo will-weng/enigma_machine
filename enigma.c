@@ -20,7 +20,7 @@ typedef struct _setting {
 } setting;
 
 static void addWheel(int num, char *wheel);
-static int index(char letter);
+static int rotorIndex(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
 
@@ -83,19 +83,19 @@ char scramble(char c, Setting e){
     int rotThree = e->rotorPos[2];
 
     //Plugboard
-    char start = e->plugBoard[index(c)];
+    char start = e->plugBoard[rotorIndex(c)];
 
     //Rotor 1
-    char one = e->rotors[0][((index(start) + rotOne)%26 + 26)%26];
+    char one = e->rotors[0][((rotorIndex(start) + rotOne)%26 + 26)%26];
 
     //Rotor 2
-    char two = e->rotors[1][((index(one) + rotTwo)%26 + 26)%26];
+    char two = e->rotors[1][((rotorIndex(one) + rotTwo)%26 + 26)%26];
 
     //Rotor 3
-    char three = e->rotors[2][((index(two) + rotThree)%26 + 26)%26];
+    char three = e->rotors[2][((rotorIndex(two) + rotThree)%26 + 26)%26];
 
     //Reflector
-    char reflect = e->rotors[3][index(three)];
+    char reflect = e->rotors[3][rotorIndex(three)];
 
     //Reverse 3
     int indexThree = findIndexInRotor(e->rotors[2],reflect);
@@ -110,18 +110,18 @@ char scramble(char c, Setting e){
     char rOne = alphabet[((indexOne-e->rotorPos[0])%26+26)%26];
 
     //Reverse Plugboard
-    int retVal = e->plugBoard[index(rOne)];
+    int retVal = e->plugBoard[rotorIndex(rOne)];
 
     //Checking for notch incrementation on rotor 1
-    cha* id1 = getNotchIndex(e->rotorId[0]);
-    if (e->rotorPos[0] == index(id1[0]) || e->rotorPos[0] == index(id[1])){
+    int* id1 = getNotchIndex(e->rotorId[0]);
+    if (e->rotorPos[0] == rotorIndex(id1[0]) || e->rotorPos[0] == rotorIndex(id1[1])){
         e->rotorPos[1]++;
     }
     free(id1);
     
     //Checking for notch incrementation on rotor 2
-    cha* id2 = getNotchIndex(e->rotorId[1]);
-    if (e->rotorPos[1] == index(id2[0]) || e->rotorPos[1] == index(id2[1])){
+    int* id2 = getNotchIndex(e->rotorId[1]);
+    if (e->rotorPos[1] == rotorIndex(id2[0]) || e->rotorPos[1] == rotorIndex(id2[1])){
         e->rotorPos[2]++;
     }
     free(id2);
@@ -192,7 +192,7 @@ static void addWheel(int num, char *wheel) {
     }
 }
 
-static int index(char letter){
+static int rotorIndex(char letter){
     return letter - 'a';
 }
 
@@ -212,24 +212,24 @@ static int* getNotchIndex(int rotor){
 
     switch(rotor){
         case 1 :
-            retVal[0] = index('j');
-            retVal[1] = index('j');
+            retVal[0] = rotorIndex('j');
+            retVal[1] = rotorIndex('j');
             break;  
         case 2 :
-            retVal[0] = index('z');
-            retVal[1] = index('z');
+            retVal[0] = rotorIndex('z');
+            retVal[1] = rotorIndex('z');
             break;
         case 3 :
-            retVal[0] = index('m');
-            retVal[1] = index('z');
+            retVal[0] = rotorIndex('m');
+            retVal[1] = rotorIndex('z');
             break;
         case 4 :
-            retVal[0] = index('m');
-            retVal[1] = index('z');
+            retVal[0] = rotorIndex('m');
+            retVal[1] = rotorIndex('z');
             break;
         case 5 :
-            retVal[0] = index('m');
-            retVal[1] = index('z');
+            retVal[0] = rotorIndex('m');
+            retVal[1] = rotorIndex('z');
             break;
     }
 
