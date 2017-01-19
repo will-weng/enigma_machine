@@ -70,7 +70,7 @@ Setting newEnigma() {
     return e;
 }
 
-char scramble(char c, setting *e){
+char scramble(char c, Setting e){
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -111,13 +111,13 @@ char scramble(char c, setting *e){
     int retVal = e->plugBoard[index(rOne)];
 
     //Checking for notch incrementation on rotor 1
-    if (rotorPos[0] == getNotchIndex(e->rotorId[0])[0] || rotorPos[0] == getNotchIndex(e->rotorId[0])[1]){
-        rotorPos[1]++;
+    if (e->rotorPos[0] == getNotchIndex(e->rotorId[0])[0] || rotorPos[0] == getNotchIndex(e->rotorId[0])[1]){
+        e->rotorPos[1]++;
     }
 
     //Checking for notch incrementation on rotor 2
-    if (rotorPos[1] == index(getNotchIndex(e->rotorId[1])[0]) || rotorPos[1] == index(getNotchIndex(e->rotorId[1])[1])){
-        rotorPos[2]++;
+    if (e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[0]) || rotorPos[1] == index(getNotchIndex(e->rotorId[1])[1])){
+        e->rotorPos[2]++;
     }
 
     //Increment rotors
