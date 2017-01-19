@@ -19,7 +19,7 @@ typedef struct _setting {
     int rotorPos[3];
 } setting;
 
-static void addWheel(int num, char *wheel);
+static void addWheel(int num, char wheel[]);
 static int rotorIndex(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
@@ -37,7 +37,6 @@ Setting newEnigma() {
             printf("Choose the rotor for position %d:\n", i + 1);
         } else {
             printf("Choose index for rotor %d:\n", i - 2);
-
         }
         if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)){
             if(i < 3) {
@@ -162,30 +161,31 @@ void deleteEnigma(Setting e) {
 }
 
 // adds a preset wheel onto the enigma machine
-static void addWheel(int num, char *wheel) {
+static void addWheel(int num, char wheel[]) {
     switch(num) {
         case '1' :
-            wheel = "ejmzalyxvbwfcrquontspikhgd";
+            strcpy(wheel, "ejmzalyxvbwfcrquontspikhgd");
             break;
         case '2' :
-            wheel = "yruhqsldpxngokmiebfzcwvjat";
+            strcpy(wheel, "yruhqsldpxngokmiebfzcwvjat");
             break;
         case '4' :
-            wheel = "esovpzjayquirhxlnftgkdcmwb";
+            strcpy(wheel, "esovpzjayquirhxlnftgkdcmwb");
             break;
         case '5' :
-            wheel = "vzbrgityupsdnhlxawmjqofeck";
+            strcpy(wheel, "vzbrgityupsdnhlxawmjqofeck");
             break;
         case '6' :
-            wheel = "jpgvoumfyqbenhzrdkasxlictw";
+            strcpy(wheel, "jpgvoumfyqbenhzrdkasxlictw");
             break;
         case '7' :
-            wheel = "nzjhgrcxmyswboufaivlpekqdt";
+            strcpy(wheel, "nzjhgrcxmyswboufaivlpekqdt");
             break;
         case '8' :
-            wheel = "fkqhtlxocbjspdzramewniuygv";
+            strcpy(wheel, "fkqhtlxocbjspdzramewniuygv");
             break;
     }
+    printf("%s\n", wheel);
 }
 
 static int rotorIndex(char letter){
@@ -207,23 +207,23 @@ static int* getNotchIndex(int rotor){
     int *retVal = malloc(sizeof(int)*2);
 
     switch(rotor){
-        case 1 :
+        case 4 :
             retVal[0] = rotorIndex('j');
             retVal[1] = rotorIndex('j');
             break;  
-        case 2 :
+        case 5 :
             retVal[0] = rotorIndex('z');
             retVal[1] = rotorIndex('z');
             break;
-        case 3 :
+        case 6 :
             retVal[0] = rotorIndex('m');
             retVal[1] = rotorIndex('z');
             break;
-        case 4 :
+        case 7 :
             retVal[0] = rotorIndex('m');
             retVal[1] = rotorIndex('z');
             break;
-        case 5 :
+        case 8 :
             retVal[0] = rotorIndex('m');
             retVal[1] = rotorIndex('z');
             break;
