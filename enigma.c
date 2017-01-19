@@ -24,6 +24,7 @@ static int index(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
 
+// create new enigma machine
 Setting newEnigma() {
     //create a new enigma machine to use including settings
     Setting e = malloc(sizeof(struct _setting));
@@ -70,6 +71,7 @@ Setting newEnigma() {
     return e;
 }
 
+// encodes a letter given depending on the settings
 char scramble(char c, Setting e){
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
@@ -152,13 +154,14 @@ char scramble(char c, Setting e){
     return retVal;
 }
 
-
+// free's all the malloced memory
 void deleteEnigma(Setting e) {
     int i;
     for(i = 0; i < 4; i++) free(e->rotors[i]);
     free(e);
 }
 
+// adds a preset wheel onto the enigma machine
 static void addWheel(int num, char *wheel) {
     switch(num) {
         case '1' :
@@ -193,8 +196,8 @@ static int index(char letter){
 static int findIndexInRotor(char *rotorArray, int cha) {
     char *loc;
     int index;
-    pos = strchr(rotorArray, cha);
-    index = (int)(pos - rotorArray);
+    loc = strchr(rotorArray, cha);
+    index = (int)(loc - rotorArray);
     return index;
 }
 
