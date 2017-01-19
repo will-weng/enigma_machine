@@ -152,16 +152,12 @@ char scramble(char c, Setting e){
     else if (e->rotorPos[2] == 27){
         e->rotorPos[2] = 1;
     }
-
-    printf("\n======TESTING======\n");
     //Return value
     return retVal;
 }
 
 // free's all the malloced memory
 void deleteEnigma(Setting e) {
-    int i;
-    for(i = 0; i < 4; i++) free(e->rotors[i]);
     free(e);
 }
 

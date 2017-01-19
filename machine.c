@@ -11,14 +11,14 @@
 int main(int argc, char *argv[]) {
     // copies the message into an array to decrypt or encrypt later;
     char message[] = "hello";
-    int length = 6;
+    int length = 5;
 
     Setting e = newEnigma();
     int i;
     for(i = 0; i < length; i++) {
         printf("%c", scramble(message[i], e));
     }
-    printf("\n is the message");
+    printf("\nis the message");
 
     deleteEnigma(e);
     
