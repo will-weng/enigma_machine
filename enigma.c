@@ -164,25 +164,25 @@ void deleteEnigma(Setting e) {
 static void addWheel(int num, Setting e, int i) {
     switch(num) {
         case '1' :
-            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhgd");
+            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhg"); e->rotors[i][ALPHABET_NUM - 1] = 'd';
             break;
         case '2' :
-            strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvjat");
+            strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvja"); e->rotors[i][ALPHABET_NUM - 1] = 't';
             break;
         case '4' :
-            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
+            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmw"); e->rotors[i][ALPHABET_NUM - 1] = 'b';
             break;
         case '5' :
-            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofeck");
+            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofec"); e->rotors[i][ALPHABET_NUM - 1] = 'k';
             break;
         case '6' :
-            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlictw");
+            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlict"); e->rotors[i][ALPHABET_NUM - 1] = 'w';
             break;
         case '7' :
-            strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqdt");
+            strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqd"); e->rotors[i][ALPHABET_NUM - 1] = 't';
             break;
         case '8' :
-            strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuygv");
+            strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuyg"); e->rotors[i][ALPHABET_NUM - 1] = 'v';
             break;
     }
 }
