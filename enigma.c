@@ -113,15 +113,19 @@ char scramble(char c, Setting e){
     int retVal = e->plugBoard[index(rOne)];
 
     //Checking for notch incrementation on rotor 1
-    if (e->rotorPos[0] == getNotchIndex(e->rotorId[0])[0] || e->rotorPos[0] == getNotchIndex(e->rotorId[0])[1]){
+    cha* id1 = getNotchIndex(e->rotorId[0]);
+    if (e->rotorPos[0] == index(id1[0]) || e->rotorPos[0] == index(id[1])){
         e->rotorPos[1]++;
     }
-
+    free(id1);
+    
     //Checking for notch incrementation on rotor 2
-    if (e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[0]) || e->rotorPos[1] == index(getNotchIndex(e->rotorId[1])[1])){
+    cha* id2 = getNotchIndex(e->rotorId[1]);
+    if (e->rotorPos[1] == index(id2[0]) || e->rotorPos[1] == index(id2[1])){
         e->rotorPos[2]++;
     }
-
+    free(id2);
+    
     //Increment rotors
     e->rotorPos[0]++;
     e->rotorPos[1]++;
@@ -204,7 +208,7 @@ static int findIndexInRotor(char *rotorArray, int cha) {
 
 //Returns an 2 element array containing the notch indicies
 static int* getNotchIndex(int rotor){
-    int retVal[2];
+    int *retVal = malloc(sizeof(int)*2);
 
     switch(rotor){
         case 1 :
