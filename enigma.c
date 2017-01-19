@@ -19,7 +19,7 @@ typedef struct _setting {
     int rotorPos[3];
 } setting;
 
-static void addWheel(int num, char wheel[]);
+static void addWheel(int num, Setting e, int i);
 static int rotorIndex(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
@@ -41,7 +41,7 @@ Setting newEnigma() {
         if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)){
             if(i < 3) {
                 e->rotorId[i] = choice;
-                addWheel(choice, e->rotors[i]);
+                addWheel(choice, e, i);
             } else {
                 e->rotorPos[i - 3] = choice;
             }
@@ -52,7 +52,7 @@ Setting newEnigma() {
     }
     printf("Choose the reflector:\n");
     if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)) {
-       addWheel(choice, e->rotors[4]);
+       addWheel(choice, e, 4);
     }
 
     strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxy"); e->plugBoard[ALPHABET_NUM - 1] = 'z';
@@ -161,31 +161,30 @@ void deleteEnigma(Setting e) {
 }
 
 // adds a preset wheel onto the enigma machine
-static void addWheel(int num, char wheel[]) {
+static void addWheel(int num, Setting e, int i) {
     switch(num) {
         case '1' :
-            strcpy(wheel, "ejmzalyxvbwfcrquontspikhgd");
+            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhgd");
             break;
         case '2' :
-            strcpy(wheel, "yruhqsldpxngokmiebfzcwvjat");
+            strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvjat");
             break;
         case '4' :
-            strcpy(wheel, "esovpzjayquirhxlnftgkdcmwb");
+            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
             break;
         case '5' :
-            strcpy(wheel, "vzbrgityupsdnhlxawmjqofeck");
+            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofeck");
             break;
         case '6' :
-            strcpy(wheel, "jpgvoumfyqbenhzrdkasxlictw");
+            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlictw");
             break;
         case '7' :
-            strcpy(wheel, "nzjhgrcxmyswboufaivlpekqdt");
+            strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqdt");
             break;
         case '8' :
-            strcpy(wheel, "fkqhtlxocbjspdzramewniuygv");
+            strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuygv");
             break;
     }
-    printf("%s\n", wheel);
 }
 
 static int rotorIndex(char letter){
