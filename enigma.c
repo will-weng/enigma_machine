@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALPHABET_NUM 26
+#define ALPHABET_NUM 30
 #define SWITCH_NUM 10
 
 typedef struct _setting {
@@ -55,7 +55,7 @@ Setting newEnigma() {
        addWheel(choice, e, 4);
     }
 
-    strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxy"); e->plugBoard[ALPHABET_NUM - 1] = 'z';
+    strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
     char switch1, switch2;
     for(i = 0; i < SWITCH_NUM; i++) {
         printf("Enter a pair of switches(%d):\n", i + 1);
@@ -163,26 +163,26 @@ void deleteEnigma(Setting e) {
 // adds a preset wheel onto the enigma machine
 static void addWheel(int num, Setting e, int i) {
     switch(num) {
-        case '1' :
-            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhg"); e->rotors[i][ALPHABET_NUM - 1] = 'd';
+        case 1 :
+            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhgd");
             break;
-        case '2' :
-            strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvja"); e->rotors[i][ALPHABET_NUM - 1] = 't';
+        case 2 :
+            strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvjat");
             break;
-        case '4' :
-            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmw"); e->rotors[i][ALPHABET_NUM - 1] = 'b';
+        case 4 :
+            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
             break;
-        case '5' :
-            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofec"); e->rotors[i][ALPHABET_NUM - 1] = 'k';
+        case 5 :
+            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofeck");
             break;
-        case '6' :
-            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlict"); e->rotors[i][ALPHABET_NUM - 1] = 'w';
+        case 6 :
+            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlictw");
             break;
-        case '7' :
-            strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqd"); e->rotors[i][ALPHABET_NUM - 1] = 't';
+        case 7 :
+            strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqdt");
             break;
-        case '8' :
-            strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuyg"); e->rotors[i][ALPHABET_NUM - 1] = 'v';
+        case 8 :
+            strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuygv");
             break;
     }
 }
