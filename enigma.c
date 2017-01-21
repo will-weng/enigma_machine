@@ -55,8 +55,8 @@ Setting newEnigma() {
     }
 
     printf("Choose the number of switches:\n");
-    int switchNum = 0;
-    while(switchNum == 0) {
+    int switchNum = -1;
+    while(switchNum == -1) {
         if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &switchNum)) {
             strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
             char switch1, switch2;
@@ -71,7 +71,7 @@ Setting newEnigma() {
                 }
             }
         } else {
-            switchNum = 0;
+            switchNum = -1;
             printf("Please re-enter the number of switches.\n");
         }
     }
@@ -172,19 +172,19 @@ void deleteEnigma(Setting e) {
 static void addWheel(int num, Setting e, int i) {
     switch(num) {
         case 1 :
-            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhgd");
+            strcpy(e->rotors[i], "fvpjiaoyedrzxwgctkuqsbnmhl");
             break;
         case 2 :
             strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvjat");
             break;
         case 4 :
-            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
+            strcpy(e->rotors[i], "ekmflgdqvzntowyhxuspaibrcj");
             break;
         case 5 :
-            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofeck");
+            strcpy(e->rotors[i], "ajdksiruxblhwtmcqgznpyfvoe");
             break;
         case 6 :
-            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlictw");
+            strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
             break;
         case 7 :
             strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqdt");
