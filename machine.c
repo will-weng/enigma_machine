@@ -10,7 +10,7 @@
 
 int main(int argc, char *argv[]) {
     // copies the message into an array to decrypt or encrypt later;
-    char message[] = "hello";
+    char message[] = "jsdff";
     int length = 5;
 
     Setting e = newEnigma();

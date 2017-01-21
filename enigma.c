@@ -43,7 +43,7 @@ Setting newEnigma() {
                 e->rotorId[i] = choice;
                 addWheel(choice, e, i);
             } else {
-                e->rotorPos[i - 3] = choice;
+                e->rotorPos[i - 3] = choice - 1;
             }
         } else {
             printf("Invalid choice, please retry\n");
@@ -52,7 +52,7 @@ Setting newEnigma() {
     }
     printf("Choose the reflector:\n");
     if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)) {
-       addWheel(choice, e, 4);
+       addWheel(choice, e, 3);
     }
 
     strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
