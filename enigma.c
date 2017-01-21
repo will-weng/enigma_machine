@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 #define ALPHABET_NUM 30
-#define SWITCH_NUM 10
 
 typedef struct _setting {
     char plugBoard[ALPHABET_NUM];
@@ -55,16 +54,25 @@ Setting newEnigma() {
        addWheel(choice, e, 3);
     }
 
-    strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
-    char switch1, switch2;
-    for(i = 0; i < SWITCH_NUM; i++) {
-        printf("Enter a pair of switches(%d):\n", i + 1);
-        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c %c", &switch1, &switch2)) {
-            e->plugBoard[switch1 - 'a'] = switch2;
-            e->plugBoard[switch2 - 'a'] = switch1;
+    printf("Choose the number of switches:\n");
+    int switchNum = 0;
+    while(switchNum == 0) {
+        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &switchNum)) {
+            strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
+            char switch1, switch2;
+            for(i = 0; i < switchNum; i++) {
+                printf("Enter a pair of switches(%d):\n", i + 1);
+                if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c %c", &switch1, &switch2)) {
+                    e->plugBoard[switch1 - 'a'] = switch2;
+                    e->plugBoard[switch2 - 'a'] = switch1;
+                } else {
+                    printf("Didn't read properly please re-enter\n");
+                    i--;
+                }
+            }
         } else {
-            printf("Didn't read properly please re-enter\n");
-            i--;
+            switchNum = 0;
+            printf("Please re-enter the number of switches.\n");
         }
     }
     return e;
