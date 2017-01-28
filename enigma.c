@@ -13,12 +13,13 @@
 
 typedef struct _setting {
     char plugBoard[ALPHABET_NUM];
-    char rotors[4][ALPHABET_NUM];
-    int rotorId[3];
-    int rotorPos[3];
+    char rotors[5][ALPHABET_NUM];
+    int rotorId[4];
+    int rotorPos[4];
+    int rotorOffset[4];
 } setting;
 
-static void addWheel(int num, Setting e, int i);
+static void addWheel(char choice, Setting e, int i);
 static int rotorIndex(char letter);
 static int findIndexInRotor(char *rotorArray, int cha);
 static int* getNotchIndex(int rotor);
@@ -27,33 +28,41 @@ static int* getNotchIndex(int rotor);
 Setting newEnigma() {
     //create a new enigma machine to use including settings
     Setting e = malloc(sizeof(struct _setting));
-    
-    int choice, i;
-    char line[ALPHABET_NUM];
+    int i;
+    char choice, line[ALPHABET_NUM];
 
-    for(i = 0; i < 6; i++) {
-        if(i < 3) {
+    // settings for the rotors
+    for(i = 0; i < 12; i++) {
+        if(i < 4) {
             printf("Choose the rotor for position %d:\n", i + 1);
+        } else if(i < 8) {
+            printf("Choose offset for rotor %d: \n", i - 3);
         } else {
-            printf("Choose index for rotor %d:\n", i - 2);
+            printf("Choose index for rotor %d:\n", i - 7);
         }
-        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)){
-            if(i < 3) {
+
+        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c", &choice)){
+            if(i < 4) {
                 e->rotorId[i] = choice;
                 addWheel(choice, e, i);
+            } else if(i < 8) {
+                e->rotorOffset[i - 4] = choice - 'a';
             } else {
-                e->rotorPos[i - 3] = choice - 1;
+                e->rotorPos[i - 8] = choice - '0';
             }
         } else {
             printf("Invalid choice, please retry\n");
             i--;
         }
     }
+
+    // settings for reflector
     printf("Choose the reflector:\n");
-    if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &choice)) {
-       addWheel(choice, e, 3);
+    if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c", &choice)) {
+       addWheel(choice, e, 4);
     }
 
+    // settings for plugboard
     printf("Choose the number of switches:\n");
     int switchNum = -1;
     while(switchNum == -1) {
@@ -169,27 +178,42 @@ void deleteEnigma(Setting e) {
 }
 
 // adds a preset wheel onto the enigma machine
-static void addWheel(int num, Setting e, int i) {
-    switch(num) {
-        case 1 :
-            strcpy(e->rotors[i], "fvpjiaoyedrzxwgctkuqsbnmhl");
+static void addWheel(char choice, Setting e, int i) {
+    switch(choice) {
+        case 'a' :
+            strcpy(e->rotors[i], "ejmzalyxvbwfcrquontspikhgd");
             break;
-        case 2 :
+        case 'b' :
             strcpy(e->rotors[i], "yruhqsldpxngokmiebfzcwvjat");
             break;
-        case 4 :
+        case 'c' :
+            strcpy(e->rotors[i], "fvpjiaoyedrzxwgctkuqsbnmhl");
+            break;
+        case '0' :
+            strcpy(e->rotors[i], "abcdefghijklmnopqrstuvwxyz");
+            break;
+        case '1' :
             strcpy(e->rotors[i], "ekmflgdqvzntowyhxuspaibrcj");
             break;
-        case 5 :
+        case '2' :
             strcpy(e->rotors[i], "ajdksiruxblhwtmcqgznpyfvoe");
             break;
-        case 6 :
+        case '3' :
+            strcpy(e->rotors[i], "bdfhjlcprtxvznyeiwgakmusqo");
+            break;
+        case '4' :
             strcpy(e->rotors[i], "esovpzjayquirhxlnftgkdcmwb");
             break;
-        case 7 :
+        case '5' :
+            strcpy(e->rotors[i], "vzbrgityupsdnhlxawmjqofeck");
+            break;
+        case '6' :
+            strcpy(e->rotors[i], "jpgvoumfyqbenhzrdkasxlictw");
+            break;
+        case '7' :
             strcpy(e->rotors[i], "nzjhgrcxmyswboufaivlpekqdt");
             break;
-        case 8 :
+        case '8' :
             strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuygv");
             break;
     }
