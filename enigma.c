@@ -75,10 +75,11 @@ Setting newEnigma() {
                     e->plugBoard[switch1 - 'a'] = switch2;
                     e->plugBoard[switch2 - 'a'] = switch1;
                 } else {
-                    printf("Didn't read properly please re-enter\n");
+                    printf("Didn't read properly, please re-enter\n");
                     i--;
                 }
             }
+            break;
         } else {
             switchNum = -1;
             printf("Please re-enter the number of switches.\n");
