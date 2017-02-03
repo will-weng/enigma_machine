@@ -104,7 +104,7 @@ char scramble(char c, Setting e){
     char letter = e->plugBoard[rotorIndex(c)];
     
     // Forward run
-    for(int i = 0; i < NUM_OF_ROTORS; i++) 
+    for(int i = 0; i < NUM_OF_ROTORS; i++)
         letter = e->rotors[i][(rotorIndex(letter) + e->rotorPos[i] +
                             rotorIndex(e->rotorOffset[i])) % 26];
 
@@ -113,9 +113,16 @@ char scramble(char c, Setting e){
 
     // Reverse run
     int indexNum;
-    for(int i = NUM_OF_ROTORS; i > 0; i--) {
+    for(int i = 3; i >= 0; i--) {
+        
+        letter = letter + e->rotorPos[i] - rotorIndex(e->rotorOffset[i]);
+
+        while(letter < 'a' || letter > 'z') {
+            letter = letter + 26;
+        }
+
         indexNum = findIndexInRotor(e->rotors[i], letter);
-        letter = alphabet[((indexNum - e->rotorPos[i])%26+26)%26];
+        letter = alphabet[indexNum];
     }
 
     //Reverse Plugboard
@@ -242,7 +249,7 @@ void showEnigma(Setting e) {
     for(int i = 0; i < 4; i++) {
         printf("rotor %d settings is: %s\n", i + 1, e->rotors[i]);
         printf("id is: %c\n", e->rotorId[i]);
-        printf("position is: %d\n", e->rotorPos[i]);
+        printf("position is: %d\n", e->rotorPos[i] + 1);
         printf("offset is: %c\n", e->rotorOffset[i]);
     }
     printf("reflector setting is: %s\n", e->rotors[4]);
