@@ -17,3 +17,6 @@ char scramble(char c, Setting e);
 
 // free's up all mallocs
 void deleteEnigma(Setting e);
+
+// prints out the settings for the current enigma
+void showEnigma(Setting e);

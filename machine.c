@@ -23,8 +23,9 @@ int main(int argc, char *argv[]) {
         }
         
         Setting e = newEnigma();
-        int i;
+        showEnigma(e);
 
+        int i;
         printf("The encrypted/decrypted message is:\n");
         for(i = 0; i < length; i++) {
             printf("%c", scramble(message[i], e));

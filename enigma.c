@@ -14,9 +14,9 @@
 typedef struct _setting {
     char plugBoard[ALPHABET_NUM];
     char rotors[5][ALPHABET_NUM];
-    int rotorId[4];
+    char rotorId[4];
     int rotorPos[4];
-    int rotorOffset[4];
+    char rotorOffset[4];
 } setting;
 
 static void addWheel(char choice, Setting e, int i);
@@ -46,7 +46,7 @@ Setting newEnigma() {
                 e->rotorId[i] = choice;
                 addWheel(choice, e, i);
             } else if(i < 8) {
-                e->rotorOffset[i - 4] = choice - 'a';
+                e->rotorOffset[i - 4] = choice;
             } else {
                 e->rotorPos[i - 8] = choice - '0';
             }
@@ -230,4 +230,16 @@ static int* getNotchIndex(int rotor){
     }
 
     return retVal;
+}
+
+// prints the current settings for enigma
+void showEnigma(Setting e) {
+    printf("plugboard settings is: %s\n", e->plugBoard);
+    for(int i = 0; i < 4; i++) {
+        printf("rotor %d settings is: %s\n", i, e->rotors[i]);
+        printf("id is: %c\n", e->rotorId[i]);
+        printf("position is: %d\n", e->rotorPos[i]);
+        printf("offset is: %c\n", e->rotorOffset[i]);
+    }
+    printf("reflector setting is: %s\n", e->rotors[4]);
 }
