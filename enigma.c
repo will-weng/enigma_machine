@@ -93,44 +93,25 @@ char scramble(char c, Setting e){
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
 
-    //Read in the rotor settings
+    // Read in the rotor settings
     int rot[4] = {0};
     for(int i = 0; i < 4; i++) rot[i] = e->rotorPos[i];
 
-    //Plugboard
+    // Plugboard
     char letter = e->plugBoard[rotorIndex(c)];
+    
+    // Forward run
+    for(int i = 0; i < 4; i++) letter = e->rotors[0][((rotorIndex(letter) + rot[i])%26 + 26)%26];
 
-    for(int i = 0; i < 4; i++) c = e->rotors[0][((rotorIndex(letter) + rot[i])%26 + 26)%26];
+    // Reflector
+    letter = e->rotors[3][rotorIndex(letter)];
 
-    // //Rotor 1
-    // char one = e->rotors[0][((rotorIndex(start) + rotOne)%26 + 26)%26];
-
-    // //Rotor 2
-    // char two = e->rotors[1][((rotorIndex(one) + rotTwo)%26 + 26)%26];
-
-    // //Rotor 3
-    // char three = e->rotors[2][((rotorIndex(two) + rotThree)%26 + 26)%26];
-
-    // //Reflector
-    // char reflect = e->rotors[3][rotorIndex(three)];
-
+    // Reverse run
     int indexNum;
     for(int i = 4; i > 0; i--) {
         indexNum = findIndexInRotor(e->rotors[2], letter);
         letter = alphabet[((indexNum - e->rotorPos[2])%26+26)%26];
     }
-
-    // //Reverse 3
-    // int indexTwo = findIndexInRotor(e->rotors[1],rThree);
-    // char rTwo = alphabet[((indexTwo-e->rotorPos[1])%26+26)%26];
-
-    // //Reverse 2
-    // int indexTwo = findIndexInRotor(e->rotors[1],rThree);
-    // char rTwo = alphabet[((indexTwo-e->rotorPos[1])%26+26)%26];
-
-    // //Reverse 1
-    // int indexOne = findIndexInRotor(e->rotors[0],rTwo);
-    // char rOne = alphabet[((indexOne-e->rotorPos[0])%26+26)%26];
 
     //Reverse Plugboard
     int retVal = e->plugBoard[rotorIndex(letter)];
@@ -149,36 +130,10 @@ char scramble(char c, Setting e){
     }
     free(id2);
 
+    //Increment rotors
     for(int i = 0; i < 3; i++)
         (e->rotorPos[i] == 26) ? e->rotorPos[i] = 1 : e->rotorPos[i]++;
 
-    // //Increment rotors
-    // e->rotorPos[0]++;
-    // e->rotorPos[1]++;
-    // e->rotorPos[2]++;
-
-    // //Limit rotor positions 
-    // if(e->rotorPos[0] == 26){
-    //     e->rotorPos[0] = 0;
-    // }
-    // else if (e->rotorPos[0] == 27){
-    //     e->rotorPos[0] = 1;
-    // }
-
-    // if(e->rotorPos[1] == 26){
-    //     e->rotorPos[1] = 0;
-    // }
-    // else if (e->rotorPos[1] == 27){
-    //     e->rotorPos[1] = 1;
-    // }
-
-    // if(e->rotorPos[2] == 26){
-    //     e->rotorPos[2] = 0;
-    // }
-    // else if (e->rotorPos[2] == 27){
-    //     e->rotorPos[2] = 1;
-    // }
-    //Return value
     return retVal;
 }
 
