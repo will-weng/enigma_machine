@@ -66,7 +66,7 @@ Setting newEnigma() {
     printf("Choose the number of switches:\n");
     int switchNum = -1;
     while(switchNum == -1) {
-        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &switchNum)) {
+        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &switchNum) && switchNum <= 13) {
             strcpy(e->plugBoard, "abcdefghijklmnopqrstuvwxyz");
             char switch1, switch2;
             for(i = 0; i < switchNum; i++) {
@@ -216,6 +216,10 @@ static void addWheel(char choice, Setting e, int i) {
             break;
         case '8' :
             strcpy(e->rotors[i], "fkqhtlxocbjspdzramewniuygv");
+            break;
+        default:
+            printf("invalid choice, using default\n");
+            strcpy(e->rotors[i], "abcdefghijklmnopqrstuvwxyz");
             break;
     }
 }
