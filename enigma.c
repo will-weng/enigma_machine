@@ -10,13 +10,14 @@
 #include <stdlib.h>
 
 #define ALPHABET_NUM 30
+#define NUM_OF_ROTORS 4
 
 typedef struct _setting {
     char plugBoard[ALPHABET_NUM];
     char rotors[5][ALPHABET_NUM];
-    char rotorId[4];
-    int rotorPos[4];
-    char rotorOffset[4];
+    char rotorId[NUM_OF_ROTORS];
+    int rotorPos[NUM_OF_ROTORS];
+    char rotorOffset[NUM_OF_ROTORS];
 } setting;
 
 static void addWheel(char choice, Setting e, int i);
@@ -28,31 +29,37 @@ static int* getNotchIndex(int rotor);
 Setting newEnigma() {
     //create a new enigma machine to use including settings
     Setting e = malloc(sizeof(struct _setting));
-    int i;
+    int i, j;
     char choice, line[ALPHABET_NUM];
 
     // settings for the rotors
-    for(i = 0; i < 12; i++) {
+    for(i = 0; i < 8; i++) {
         if(i < 4) {
             printf("Choose the rotor for position %d:\n", i + 1);
-        } else if(i < 8) {
-            printf("Choose offset for rotor %d: \n", i - 3);
         } else {
-            printf("Choose index for rotor %d:\n", i - 7);
+            printf("Choose offset for rotor %d: \n", i - 3);
         }
 
         if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%c", &choice)){
             if(i < 4) {
                 e->rotorId[i] = choice;
                 addWheel(choice, e, i);
-            } else if(i < 8) {
-                e->rotorOffset[i - 4] = choice - 1;
             } else {
-                e->rotorPos[i - 8] = choice - '0';
+                e->rotorOffset[i - 4] = choice;
             }
         } else {
             printf("Invalid choice, please retry\n");
             i--;
+        }
+    }
+    
+    for(i = 0; i < NUM_OF_ROTORS; i++) {
+        printf("Choose index for rotor %d:\n", i - 7);
+        if(fgets(line, sizeof(line), stdin) != NULL && sscanf(line, "%d", &j)) {
+            e->rotorPos[i] = j - 1;
+        } else {
+        printf("Invalid choice, please retry\n");
+        i--;
         }
     }
 
@@ -97,7 +104,7 @@ char scramble(char c, Setting e){
     char letter = e->plugBoard[rotorIndex(c)];
     
     // Forward run
-    for(int i = 0; i < 4; i++) 
+    for(int i = 0; i < NUM_OF_ROTORS; i++) 
         letter = e->rotors[i][(rotorIndex(letter) + e->rotorPos[i] +
                             rotorIndex(e->rotorOffset[i])) % 26];
 
@@ -106,9 +113,9 @@ char scramble(char c, Setting e){
 
     // Reverse run
     int indexNum;
-    for(int i = 4; i > 0; i--) {
-        indexNum = findIndexInRotor(e->rotors[2], letter);
-        letter = alphabet[((indexNum - e->rotorPos[2])%26+26)%26];
+    for(int i = NUM_OF_ROTORS; i > 0; i--) {
+        indexNum = findIndexInRotor(e->rotors[i], letter);
+        letter = alphabet[((indexNum - e->rotorPos[i])%26+26)%26];
     }
 
     //Reverse Plugboard
@@ -131,6 +138,8 @@ char scramble(char c, Setting e){
     //Increment rotors
     for(int i = 0; i < 3; i++)
         (e->rotorPos[i] == 26) ? e->rotorPos[i] = 1 : e->rotorPos[i]++;
+
+    (e->rotorId[3] == '0') ? e->rotorPos[3] = 0 : e->rotorPos[3]++;
 
     return retVal;
 }
@@ -193,12 +202,9 @@ static int rotorIndex(char letter){
 //Because why the hell not include another library for a single function -.-
 static int findIndexInRotor(char *rotorArray, int cha) {
     char *loc;
-    int index;
     loc = strchr(rotorArray, cha);
-    index = (int)(loc - rotorArray);
-    return index;
+    return (int)(loc - rotorArray);
 }
-
 
 //Returns an 2 element array containing the notch indicies
 static int* getNotchIndex(int rotor){
