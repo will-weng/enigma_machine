@@ -1,2 +1,2 @@
 all: 
-	gcc -Wall -Werror -O -o enigmaMachine machine.c enigma.c
+	gcc -Wall -Werror -std=c99 -O -o enigmaMachine machine.c enigma.c
