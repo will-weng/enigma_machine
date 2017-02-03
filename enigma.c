@@ -46,7 +46,7 @@ Setting newEnigma() {
                 e->rotorId[i] = choice;
                 addWheel(choice, e, i);
             } else if(i < 8) {
-                e->rotorOffset[i - 4] = choice;
+                e->rotorOffset[i - 4] = choice - 1;
             } else {
                 e->rotorPos[i - 8] = choice - '0';
             }
@@ -93,18 +93,16 @@ char scramble(char c, Setting e){
 
     char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
 
-    // Read in the rotor settings
-    int rot[4] = {0};
-    for(int i = 0; i < 4; i++) rot[i] = e->rotorPos[i];
-
     // Plugboard
     char letter = e->plugBoard[rotorIndex(c)];
     
     // Forward run
-    for(int i = 0; i < 4; i++) letter = e->rotors[0][((rotorIndex(letter) + rot[i])%26 + 26)%26];
+    for(int i = 0; i < 4; i++) 
+        letter = e->rotors[i][(rotorIndex(letter) + e->rotorPos[i] +
+                            rotorIndex(e->rotorOffset[i])) % 26];
 
     // Reflector
-    letter = e->rotors[3][rotorIndex(letter)];
+    letter = e->rotors[4][rotorIndex(letter)];
 
     // Reverse run
     int indexNum;
@@ -236,7 +234,7 @@ static int* getNotchIndex(int rotor){
 void showEnigma(Setting e) {
     printf("plugboard settings is: %s\n", e->plugBoard);
     for(int i = 0; i < 4; i++) {
-        printf("rotor %d settings is: %s\n", i, e->rotors[i]);
+        printf("rotor %d settings is: %s\n", i + 1, e->rotors[i]);
         printf("id is: %c\n", e->rotorId[i]);
         printf("position is: %d\n", e->rotorPos[i]);
         printf("offset is: %c\n", e->rotorOffset[i]);
