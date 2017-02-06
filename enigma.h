@@ -3,6 +3,8 @@
 // Enigma Machine interface
 // 16/01/2017
 //
+#ifndef ENIGMA_H
+#define ENIGMA_H
 
 typedef struct _setting *Setting;
 
@@ -20,3 +22,5 @@ void deleteEnigma(Setting e);
 
 // prints out the settings for the current enigma
 void showEnigma(Setting e);
+
+#endif
